@@ -8,7 +8,7 @@ use App\Repositories\BaseRepository;
 /**
  * Class ConceptoRepository
  * @package App\Repositories
- * @version June 18, 2020, 7:48 am UTC
+ * @version November 3, 2020, 6:08 am UTC
 */
 
 class ConceptoRepository extends BaseRepository

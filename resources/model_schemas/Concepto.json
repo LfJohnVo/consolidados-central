@@ -15,7 +15,7 @@
         "name": "descripcion",
         "dbType": "string,250:nullable",
         "htmlType": "text",
-        "validations": null,
+        "validations": "nullable|string|max:250|nullable|string|max:250",
         "searchable": true,
         "fillable": true,
         "primary": false,
@@ -27,7 +27,7 @@
         "name": "tipo",
         "dbType": "string,45:nullable",
         "htmlType": "text",
-        "validations": null,
+        "validations": "nullable|string|max:45|nullable|string|max:45",
         "searchable": true,
         "fillable": true,
         "primary": false,
@@ -39,7 +39,7 @@
         "name": "id_mat_articulo",
         "dbType": "integer,false",
         "htmlType": null,
-        "validations": null,
+        "validations": "nullable|integer|nullable|integer",
         "searchable": true,
         "fillable": true,
         "primary": false,
@@ -49,18 +49,14 @@
     },
     {
         "name": "estatus",
-        "dbType": "string,1:nullable",
+        "dbType": "string,5:nullable",
         "htmlType": "text",
-        "validations": null,
+        "validations": "nullable|string|max:5|nullable|string|max:5",
         "searchable": true,
         "fillable": true,
         "primary": false,
         "inForm": true,
         "inIndex": true,
         "inView": true
-    },
-    {
-        "type": "relation",
-        "relation": "1tm,OperacionesDetHistorico,id_concepto"
     }
 ]

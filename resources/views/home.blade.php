@@ -49,7 +49,7 @@
                             <th scope="col">Operaciones anteriores</th>
                             <th scope="col">Variación</th>
                             <th scope="col">% Porcentaje</th>
-                            <th scope="col">Boleto</th>
+                            <th scope="col">Boleto promedio</th>
                             <th scope="col">Grupo</th>
                         </tr>
                         </thead>
@@ -59,8 +59,8 @@
                                 <td>{!! $desglose->operacionesactuales !!}</td>
                                 <td>{!! $desglose->operacioneshistorico !!}</td>
                                 <td>{!! $desglose->variacion !!}</td>
-                                <td>{!! $desglose->porcentaje !!}</td>
-                                <td>{!! $desglose->tickets !!}</td>
+                                <td>{{ number_format($desglose->porcentaje, 2) }}</td>
+                                <td>{{ number_format($desglose->tickets, 2) }}</td>
                                 <td>{!! $desglose->grupo !!}</td>
                             @endforeach
                         </tr>

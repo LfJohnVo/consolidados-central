@@ -7,9 +7,8 @@ use Eloquent as Model;
 /**
  * Class Concepto
  * @package App\Models
- * @version June 18, 2020, 7:48 am UTC
+ * @version November 3, 2020, 6:08 am UTC
  *
- * @property \Illuminate\Database\Eloquent\Collection $operacionesDetHistoricos
  * @property string $descripcion
  * @property string $tipo
  * @property integer $id_mat_articulo
@@ -19,9 +18,11 @@ class Concepto extends Model
 {
 
     public $table = 'cat_conceptos';
-
+    
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
+
+
 
 
     public $fillable = [
@@ -50,14 +51,11 @@ class Concepto extends Model
      * @var array
      */
     public static $rules = [
-
+        'descripcion' => 'nullable|string|max:250',
+        'tipo' => 'nullable|string|max:45',
+        'id_mat_articulo' => 'nullable|integer',
+        'estatus' => 'nullable|string|max:5'
     ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     **/
-    public function operacionesDetHistoricos()
-    {
-        return $this->hasMany(\App\Models\OperacionesDetHistorico::class, 'id_concepto');
-    }
+    
 }

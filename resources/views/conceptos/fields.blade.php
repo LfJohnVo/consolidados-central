@@ -1,13 +1,13 @@
 <!-- Descripcion Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('descripcion', 'Descripcion:') !!}
-    {!! Form::text('descripcion', null, ['class' => 'form-control']) !!}
+    {!! Form::text('descripcion', null, ['class' => 'form-control','maxlength' => 250,'maxlength' => 250]) !!}
 </div>
 
 <!-- Tipo Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('tipo', 'Tipo:') !!}
-    {!! Form::text('tipo', null, ['class' => 'form-control']) !!}
+    {!! Form::text('tipo', null, ['class' => 'form-control','maxlength' => 45,'maxlength' => 45]) !!}
 </div>
 
 <!-- Id Mat Articulo Field -->
@@ -19,7 +19,7 @@
 <!-- Estatus Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('estatus', 'Estatus:') !!}
-    {!! Form::text('estatus', null, ['class' => 'form-control']) !!}
+    {!! Form::text('estatus', null, ['class' => 'form-control','maxlength' => 5,'maxlength' => 5]) !!}
 </div>
 
 <!-- Submit Field -->
