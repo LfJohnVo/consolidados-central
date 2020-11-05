@@ -2,26 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Eloquent as Model;
 
 /**
  * Class Gerente
  * @package App\Models
- * @version June 10, 2020, 8:37 pm UTC
+ * @version November 5, 2020, 6:46 pm UTC
  *
- * @property \App\Models\Proyecto $idProyecto
- * @property integer $id_proyecto
+ * @property \App\Models\Distritale $idDistrital
+ * @property \Illuminate\Database\Eloquent\Collection $proyectos
  * @property string $nombre
  * @property string $email
  * @property string $password
+ * @property integer $id_distrital
+ * @property string $estatus
  */
-class Gerente extends Authenticatable
+class Gerente extends Model
 {
-    use Notifiable;
-    //use SoftDeletes;
 
     public $table = 'gerentes';
     
@@ -29,15 +26,14 @@ class Gerente extends Authenticatable
     const UPDATED_AT = 'updated_at';
 
 
-    protected $dates = ['deleted_at'];
-
 
 
     public $fillable = [
-        'id_proyecto',
         'nombre',
         'email',
-        'password'
+        'password',
+        'id_distrital',
+        'estatus'
     ];
 
     /**
@@ -47,10 +43,11 @@ class Gerente extends Authenticatable
      */
     protected $casts = [
         'id' => 'integer',
-        'id_proyecto' => 'integer',
         'nombre' => 'string',
         'email' => 'string',
-        'password' => 'string'
+        'password' => 'string',
+        'id_distrital' => 'integer',
+        'estatus' => 'string'
     ];
 
     /**
@@ -59,17 +56,28 @@ class Gerente extends Authenticatable
      * @var array
      */
     public static $rules = [
-        'id_proyecto' => 'required',
-        'nombre' => 'required',
-        'email' => 'required',
-        'password' => 'required'
+        'nombre' => 'required|string|max:255',
+        'email' => 'required|string|max:255',
+        'password' => 'required|string|max:255',
+        'created_at' => 'nullable',
+        'updated_at' => 'nullable',
+        'id_distrital' => 'nullable|integer',
+        'estatus' => 'nullable|string|max:5'
     ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function idProyecto()
+    public function idDistrital()
     {
-        return $this->belongsTo(\App\Models\Proyecto::class, 'id_proyecto');
+        return $this->belongsTo(\App\Models\Distritale::class, 'id_distrital');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function proyectos()
+    {
+        return $this->hasMany(\App\Models\Proyecto::class, 'id_gerentes');
     }
 }

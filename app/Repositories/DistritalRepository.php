@@ -2,25 +2,24 @@
 
 namespace App\Repositories;
 
-use App\Models\Proyecto;
+use App\Models\Distrital;
 use App\Repositories\BaseRepository;
 
 /**
- * Class ProyectoRepository
+ * Class DistritalRepository
  * @package App\Repositories
  * @version November 5, 2020, 6:47 pm UTC
 */
 
-class ProyectoRepository extends BaseRepository
+class DistritalRepository extends BaseRepository
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
-        'no_proyecto',
-        'Nombre',
-        'id_gerentes',
-        'id_grupo',
+        'nombre',
+        'clave_distrito',
+        'id_regional',
         'estatus'
     ];
 
@@ -39,6 +38,6 @@ class ProyectoRepository extends BaseRepository
      **/
     public function model()
     {
-        return Proyecto::class;
+        return Distrital::class;
     }
 }

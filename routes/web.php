@@ -49,3 +49,6 @@ Route::group(['middleware' => 'auth:gerente'], function () {
 Route::resource('clientes', 'ClienteController');
 
 Route::resource('promesas', 'PromesaController');
+
+
+Route::resource('distritals', 'DistritalController');

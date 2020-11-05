@@ -13,9 +13,9 @@
     },
     {
         "name": "nombre",
-        "dbType": "string,255",
+        "dbType": "string,50:nullable",
         "htmlType": "text",
-        "validations": "required|string|max:255|string|max:255",
+        "validations": "nullable|string|max:50|nullable|string|max:50",
         "searchable": true,
         "fillable": true,
         "primary": false,
@@ -24,10 +24,10 @@
         "inView": true
     },
     {
-        "name": "email",
-        "dbType": "string,255",
+        "name": "clave_distrito",
+        "dbType": "string,20:nullable",
         "htmlType": "text",
-        "validations": "required|string|max:255|string|max:255",
+        "validations": "nullable|string|max:20|nullable|string|max:20",
         "searchable": true,
         "fillable": true,
         "primary": false,
@@ -36,10 +36,10 @@
         "inView": true
     },
     {
-        "name": "password",
-        "dbType": "string,255",
-        "htmlType": "text",
-        "validations": "required|string|max:255|string|max:255",
+        "name": "id_regional",
+        "dbType": "integer,false",
+        "htmlType": null,
+        "validations": "required|integer|integer",
         "searchable": true,
         "fillable": true,
         "primary": false,
@@ -72,22 +72,10 @@
         "inView": false
     },
     {
-        "name": "id_distrital",
-        "dbType": "integer,false",
-        "htmlType": null,
-        "validations": "nullable|integer|nullable|integer",
-        "searchable": true,
-        "fillable": true,
-        "primary": false,
-        "inForm": true,
-        "inIndex": true,
-        "inView": true
-    },
-    {
         "name": "estatus",
-        "dbType": "string,5:nullable",
-        "htmlType": "text",
-        "validations": "nullable|string|max:5|nullable|string|max:5",
+        "dbType": "boolean:nullable",
+        "htmlType": "checkbox,1",
+        "validations": "nullable|boolean|nullable|boolean",
         "searchable": true,
         "fillable": true,
         "primary": false,
@@ -97,10 +85,10 @@
     },
     {
         "type": "relation",
-        "relation": "mt1,Distritale,id_distrital"
+        "relation": "mt1,Regionale,id_regional"
     },
     {
         "type": "relation",
-        "relation": "1tm,Proyecto,id_gerentes"
+        "relation": "1tm,Gerente,id_distrital"
     }
 ]

@@ -7,16 +7,17 @@ use Eloquent as Model;
 /**
  * Class Region
  * @package App\Models
- * @version June 18, 2020, 7:55 am UTC
+ * @version November 5, 2020, 6:49 pm UTC
  *
- * @property \Illuminate\Database\Eloquent\Collection $proyectos
- * @property string $nombre
- * @property string $identificador
+ * @property \Illuminate\Database\Eloquent\Collection $distritales
+ * @property string $nombre_regional
+ * @property string $clave_region
+ * @property string $ESTATUS
  */
 class Region extends Model
 {
 
-    public $table = 'regiones';
+    public $table = 'regionales';
     
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
@@ -25,8 +26,9 @@ class Region extends Model
 
 
     public $fillable = [
-        'nombre',
-        'identificador'
+        'nombre_regional',
+        'clave_region',
+        'ESTATUS'
     ];
 
     /**
@@ -36,8 +38,9 @@ class Region extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'nombre' => 'string',
-        'identificador' => 'string'
+        'nombre_regional' => 'string',
+        'clave_region' => 'string',
+        'ESTATUS' => 'string'
     ];
 
     /**
@@ -46,14 +49,18 @@ class Region extends Model
      * @var array
      */
     public static $rules = [
-        
+        'nombre_regional' => 'nullable|string|max:150',
+        'clave_region' => 'required|string|max:25',
+        'created_at' => 'nullable',
+        'updated_at' => 'nullable',
+        'ESTATUS' => 'nullable|string|max:1'
     ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function proyectos()
+    public function distritales()
     {
-        return $this->hasMany(\App\Models\Proyecto::class, 'id_region');
+        return $this->hasMany(\App\Models\Distritale::class, 'id_regional');
     }
 }

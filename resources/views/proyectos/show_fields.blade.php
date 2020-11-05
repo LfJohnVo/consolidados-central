@@ -10,15 +10,21 @@
     <p>{{ $proyecto->Nombre }}</p>
 </div>
 
-<!-- Id Region Field -->
+<!-- Id Gerentes Field -->
 <div class="form-group">
-    {!! Form::label('id_region', 'Id Region:') !!}
-    <p>{{ $proyecto->id_region }}</p>
+    {!! Form::label('id_gerentes', 'Id Gerentes:') !!}
+    <p>{{ $proyecto->id_gerentes }}</p>
 </div>
 
 <!-- Id Grupo Field -->
 <div class="form-group">
     {!! Form::label('id_grupo', 'Id Grupo:') !!}
     <p>{{ $proyecto->id_grupo }}</p>
+</div>
+
+<!-- Estatus Field -->
+<div class="form-group">
+    {!! Form::label('estatus', 'Estatus:') !!}
+    <p>{{ $proyecto->estatus }}</p>
 </div>
 

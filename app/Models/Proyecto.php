@@ -7,16 +7,17 @@ use Eloquent as Model;
 /**
  * Class Proyecto
  * @package App\Models
- * @version June 18, 2020, 7:56 am UTC
+ * @version November 5, 2020, 6:47 pm UTC
  *
+ * @property \App\Models\Gerente $idGerentes
  * @property \App\Models\CatGrupo $idGrupo
- * @property \App\Models\Regione $idRegion
  * @property \Illuminate\Database\Eloquent\Collection $operacionesDets
- * @property \Illuminate\Database\Eloquent\Collection $gerentes
+ * @property \Illuminate\Database\Eloquent\Collection $catConceptos
  * @property integer $no_proyecto
  * @property string $Nombre
- * @property integer $id_region
+ * @property integer $id_gerentes
  * @property integer $id_grupo
+ * @property string $estatus
  */
 class Proyecto extends Model
 {
@@ -32,8 +33,9 @@ class Proyecto extends Model
     public $fillable = [
         'no_proyecto',
         'Nombre',
-        'id_region',
-        'id_grupo'
+        'id_gerentes',
+        'id_grupo',
+        'estatus'
     ];
 
     /**
@@ -45,8 +47,9 @@ class Proyecto extends Model
         'id' => 'integer',
         'no_proyecto' => 'integer',
         'Nombre' => 'string',
-        'id_region' => 'integer',
-        'id_grupo' => 'integer'
+        'id_gerentes' => 'integer',
+        'id_grupo' => 'integer',
+        'estatus' => 'string'
     ];
 
     /**
@@ -55,8 +58,22 @@ class Proyecto extends Model
      * @var array
      */
     public static $rules = [
-        
+        'no_proyecto' => 'required|integer',
+        'Nombre' => 'required|string|max:255',
+        'id_gerentes' => 'required|integer',
+        'id_grupo' => 'required',
+        'created_at' => 'nullable',
+        'updated_at' => 'nullable',
+        'estatus' => 'nullable|string|max:1'
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function idGerentes()
+    {
+        return $this->belongsTo(\App\Models\Gerente::class, 'id_gerentes');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -64,14 +81,6 @@ class Proyecto extends Model
     public function idGrupo()
     {
         return $this->belongsTo(\App\Models\CatGrupo::class, 'id_grupo');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     **/
-    public function idRegion()
-    {
-        return $this->belongsTo(\App\Models\Regione::class, 'id_region');
     }
 
     /**
@@ -83,10 +92,10 @@ class Proyecto extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      **/
-    public function gerentes()
+    public function catConceptos()
     {
-        return $this->hasMany(\App\Models\Gerente::class, 'id_proyecto');
+        return $this->belongsToMany(\App\Models\CatConcepto::class, 'Operaciones_Det_Historico');
     }
 }

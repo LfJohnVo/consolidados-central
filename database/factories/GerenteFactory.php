@@ -8,9 +8,12 @@ use Faker\Generator as Faker;
 $factory->define(Gerente::class, function (Faker $faker) {
 
     return [
-        'id_proyecto' => rand(1,10),
         'nombre' => $faker->word,
         'email' => $faker->word,
         'password' => $faker->word,
+        'created_at' => $faker->date('Y-m-d H:i:s'),
+        'updated_at' => $faker->date('Y-m-d H:i:s'),
+        'id_distrital' => $faker->randomDigitNotNull,
+        'estatus' => $faker->word
     ];
 });

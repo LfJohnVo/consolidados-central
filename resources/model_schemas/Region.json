@@ -1,7 +1,7 @@
 [
     {
         "name": "id",
-        "dbType": "bigInteger,false",
+        "dbType": "integer,true",
         "htmlType": null,
         "validations": null,
         "searchable": false,
@@ -12,10 +12,10 @@
         "inView": false
     },
     {
-        "name": "nombre",
-        "dbType": "string,255:nullable",
+        "name": "nombre_regional",
+        "dbType": "string,150:nullable",
         "htmlType": "text",
-        "validations": null,
+        "validations": "nullable|string|max:150|nullable|string|max:150",
         "searchable": true,
         "fillable": true,
         "primary": false,
@@ -24,10 +24,10 @@
         "inView": true
     },
     {
-        "name": "identificador",
-        "dbType": "string,255:nullable",
+        "name": "clave_region",
+        "dbType": "string,25",
         "htmlType": "text",
-        "validations": null,
+        "validations": "required|string|max:25|string|max:25",
         "searchable": true,
         "fillable": true,
         "primary": false,
@@ -39,7 +39,7 @@
         "name": "created_at",
         "dbType": "datetime:nullable",
         "htmlType": "date",
-        "validations": null,
+        "validations": "nullable|nullable",
         "searchable": false,
         "fillable": false,
         "primary": false,
@@ -51,7 +51,7 @@
         "name": "updated_at",
         "dbType": "datetime:nullable",
         "htmlType": "date",
-        "validations": null,
+        "validations": "nullable|nullable",
         "searchable": false,
         "fillable": false,
         "primary": false,
@@ -60,7 +60,19 @@
         "inView": false
     },
     {
+        "name": "ESTATUS",
+        "dbType": "string,1:nullable",
+        "htmlType": "text",
+        "validations": "nullable|string|max:1|nullable|string|max:1",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
         "type": "relation",
-        "relation": "1tm,Proyecto,id_region"
+        "relation": "1tm,Distritale,id_regional"
     }
 ]

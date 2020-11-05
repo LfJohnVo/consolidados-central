@@ -1,12 +1,18 @@
-<!-- Nombre Field -->
+<!-- Nombre Regional Field -->
 <div class="form-group">
-    {!! Form::label('nombre', 'Nombre:') !!}
-    <p>{{ $region->nombre }}</p>
+    {!! Form::label('nombre_regional', 'Nombre Regional:') !!}
+    <p>{{ $region->nombre_regional }}</p>
 </div>
 
-<!-- Identificador Field -->
+<!-- Clave Region Field -->
 <div class="form-group">
-    {!! Form::label('identificador', 'Identificador:') !!}
-    <p>{{ $region->identificador }}</p>
+    {!! Form::label('clave_region', 'Clave Region:') !!}
+    <p>{{ $region->clave_region }}</p>
+</div>
+
+<!-- Estatus Field -->
+<div class="form-group">
+    {!! Form::label('ESTATUS', 'Estatus:') !!}
+    <p>{{ $region->ESTATUS }}</p>
 </div>
 

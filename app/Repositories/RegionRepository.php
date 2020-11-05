@@ -8,7 +8,7 @@ use App\Repositories\BaseRepository;
 /**
  * Class RegionRepository
  * @package App\Repositories
- * @version June 18, 2020, 7:55 am UTC
+ * @version November 5, 2020, 6:49 pm UTC
 */
 
 class RegionRepository extends BaseRepository
@@ -17,8 +17,9 @@ class RegionRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'nombre',
-        'identificador'
+        'nombre_regional',
+        'clave_region',
+        'ESTATUS'
     ];
 
     /**

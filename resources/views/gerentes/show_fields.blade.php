@@ -1,9 +1,3 @@
-<!-- Id Proyecto Field -->
-<div class="form-group">
-    {!! Form::label('id_proyecto', 'Id Proyecto:') !!}
-    <p>{{ $gerente->id_proyecto }}</p>
-</div>
-
 <!-- Nombre Field -->
 <div class="form-group">
     {!! Form::label('nombre', 'Nombre:') !!}
@@ -20,5 +14,17 @@
 <div class="form-group">
     {!! Form::label('password', 'Password:') !!}
     <p>{{ $gerente->password }}</p>
+</div>
+
+<!-- Id Distrital Field -->
+<div class="form-group">
+    {!! Form::label('id_distrital', 'Id Distrital:') !!}
+    <p>{{ $gerente->id_distrital }}</p>
+</div>
+
+<!-- Estatus Field -->
+<div class="form-group">
+    {!! Form::label('estatus', 'Estatus:') !!}
+    <p>{{ $gerente->estatus }}</p>
 </div>
 

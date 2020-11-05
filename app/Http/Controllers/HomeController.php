@@ -34,12 +34,13 @@ class HomeController extends Controller
         $date = date('Y-m-d 18:00.00');
         $año = date('Y');
         $añoA = date('Y', strtotime('-1 year'));
-        $sql = "select distinct (pr . no_proyecto) as numero_proyecto, pr . Nombre as nombre_proyecto,
+
+        $sql = "select distinct (pr.no_proyecto) as numero_proyecto, pr.Nombre as nombre_proyecto,
         grt . email as correo
         from OperacionesDet odt, proyecto pr, gerentes grt
-        where odt . id_proyecto = pr . id
-        and pr . id = grt . id_proyecto
-        and odt.fecha < '$date' and odt.estatus = 0";
+        where odt.id_proyecto = pr.id
+        and pr.id_gerentes = grt.id
+        and odt.fecha < '$date' and odt.estatus = 0;";
         $result = DB::SELECT($sql);
         //dd($result);
 
