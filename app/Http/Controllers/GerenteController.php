@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateGerenteRequest;
 use App\Http\Requests\UpdateGerenteRequest;
+use App\Models\Distrital;
 use App\Repositories\GerenteRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Support\Facades\Hash;
 use Response;
 
 class GerenteController extends AppBaseController
@@ -42,7 +44,9 @@ class GerenteController extends AppBaseController
      */
     public function create()
     {
-        return view('gerentes.create');
+        $distrital = Distrital::all();
+
+        return view('gerentes.create')->with('distritals', $distrital);
     }
 
     /**
@@ -55,10 +59,10 @@ class GerenteController extends AppBaseController
     public function store(CreateGerenteRequest $request)
     {
         $input = $request->all();
-
+        $input['password'] = Hash::make($input['password']);
         $gerente = $this->gerenteRepository->create($input);
 
-        Flash::success('Gerente saved successfully.');
+        Flash::success('Gerente añadido.');
 
         return redirect(route('gerentes.index'));
     }
@@ -94,13 +98,15 @@ class GerenteController extends AppBaseController
     {
         $gerente = $this->gerenteRepository->find($id);
 
+        $distrital = Distrital::all();
+
         if (empty($gerente)) {
             Flash::error('Gerente not found');
 
             return redirect(route('gerentes.index'));
         }
 
-        return view('gerentes.edit')->with('gerente', $gerente);
+        return view('gerentes.edit')->with('gerente', $gerente)->with('distritals', $distrital);
     }
 
     /**

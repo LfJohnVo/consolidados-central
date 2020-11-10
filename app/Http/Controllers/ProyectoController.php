@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateProyectoRequest;
 use App\Http\Requests\UpdateProyectoRequest;
+use App\Models\Gerente;
+use App\Models\Grupo;
+use App\Models\Proyecto;
 use App\Repositories\ProyectoRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
@@ -42,7 +45,9 @@ class ProyectoController extends AppBaseController
      */
     public function create()
     {
-        return view('proyectos.create');
+        $gerentes = Gerente::all();
+        $grupo = Grupo::all();
+        return view('proyectos.create')->with('gerentes', $gerentes)->with("grupos", $grupo);
     }
 
     /**
@@ -100,7 +105,10 @@ class ProyectoController extends AppBaseController
             return redirect(route('proyectos.index'));
         }
 
-        return view('proyectos.edit')->with('proyecto', $proyecto);
+        $gerentes = Gerente::all();
+        $grupo = Grupo::all();
+
+        return view('proyectos.edit')->with('proyecto', $proyecto)->with('gerentes', $gerentes)->with('grupos', $grupo);
     }
 
     /**

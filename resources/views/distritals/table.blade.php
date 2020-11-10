@@ -14,7 +14,7 @@
             <tr>
                 <td>{{ $distrital->nombre }}</td>
                 <td>{{ $distrital->clave_distrito }}</td>
-                <td>{{ $distrital->id_regional->nombre_regional }}</td>
+                <td>{{ $distrital->id_regional }}</td>
                 <td>
                     @if($distrital->estatus = 1)
                         Activo

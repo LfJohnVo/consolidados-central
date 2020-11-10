@@ -13,7 +13,7 @@
                <div class="row">
                    {!! Form::model($distrital, ['route' => ['distritals.update', $distrital->id], 'method' => 'patch']) !!}
 
-                        @include('distritals.fields')
+                        @include('distritals.editfield')
 
                    {!! Form::close() !!}
                </div>

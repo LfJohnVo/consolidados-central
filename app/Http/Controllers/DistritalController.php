@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateDistritalRequest;
 use App\Http\Requests\UpdateDistritalRequest;
+use App\Models\Region;
 use App\Repositories\DistritalRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
@@ -42,7 +43,8 @@ class DistritalController extends AppBaseController
      */
     public function create()
     {
-        return view('distritals.create');
+        $regionales = Region::all();
+        return view('distritals.create')->with('regionales', $regionales);
     }
 
     /**
@@ -100,7 +102,8 @@ class DistritalController extends AppBaseController
             return redirect(route('distritals.index'));
         }
 
-        return view('distritals.edit')->with('distrital', $distrital);
+        $regionales = Region::all();
+        return view('distritals.edit')->with('distrital', $distrital)->with('regionales', $regionales);
     }
 
     /**

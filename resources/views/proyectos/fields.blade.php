@@ -1,35 +1,42 @@
 <!-- No Proyecto Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
     {!! Form::label('no_proyecto', 'No Proyecto:') !!}
     {!! Form::number('no_proyecto', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Nombre Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
     {!! Form::label('Nombre', 'Nombre:') !!}
     {!! Form::text('Nombre', null, ['class' => 'form-control','maxlength' => 255,'maxlength' => 255]) !!}
 </div>
 
 <!-- Id Gerentes Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('id_gerentes', 'Id Gerentes:') !!}
-    {!! Form::number('id_gerentes', null, ['class' => 'form-control']) !!}
+<div class="form-group col-sm-12">
+    <label for="exampleFormControlSelect1">Gerente</label>
+    <select class="form-control" id="exampleFormControlSelect1" name="id_gerentes">
+        @foreach($gerentes as $gerente)
+            <option value="{{$gerente->id}}">{{$gerente->nombre}}</option>
+        @endforeach
+    </select>
 </div>
 
 <!-- Id Grupo Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('id_grupo', 'Id Grupo:') !!}
-    {!! Form::number('id_grupo', null, ['class' => 'form-control']) !!}
+<div class="form-group col-sm-12">
+    <label for="exampleFormControlSelect1">Grupo</label>
+    <select class="form-control" id="exampleFormControlSelect1" name="id_grupo">
+        @foreach($grupos as $grupo)
+            <option value="{{$grupo->id_grupos}}">{{$grupo->grupo}}</option>
+        @endforeach
+    </select>
 </div>
 
 <!-- Estatus Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('estatus', 'Estatus:') !!}
-    {!! Form::text('estatus', null, ['class' => 'form-control','maxlength' => 1,'maxlength' => 1]) !!}
+<div class="form-group col-sm-12">
+    {!! Form::hidden('estatus', 1, ['class' => 'form-control','maxlength' => 5,'maxlength' => 5]) !!}
 </div>
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
-    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-    <a href="{{ route('proyectos.index') }}" class="btn btn-default">Cancel</a>
+    {!! Form::submit('Enviar', ['class' => 'btn btn-primary']) !!}
+    <a href="{{ route('proyectos.index') }}" class="btn btn-default">Cancelar</a>
 </div>
