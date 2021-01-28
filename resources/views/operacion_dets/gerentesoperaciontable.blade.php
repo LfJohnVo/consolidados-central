@@ -11,17 +11,8 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($proyectos as $operacionDet)
-            <tr>
-                <td>{{ $operacionDet->fecha }}</td>
-                <td>{{ $operacionDet->no_operaciones }}</td>
-                <td>{{ $operacionDet->id_proyecto }}</td>
-            <!--td>{{ $operacionDet->estatus }}</td>-->
-            <!--<td>{{ $operacionDet->id_concepto }}</td>-->
-                <td>{{ $operacionDet->tickets }}</td>
-            </tr>
-        @endforeach
+
         </tbody>
     </table>
-    {{$proyectos->links()}}
+
 </div>

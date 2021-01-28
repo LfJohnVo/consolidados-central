@@ -8,6 +8,7 @@ use App\Models\Distrital;
 use App\Repositories\GerenteRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Flash;
 use Illuminate\Support\Facades\Hash;
 use Response;
@@ -31,6 +32,7 @@ class GerenteController extends AppBaseController
      */
     public function index(Request $request)
     {
+        dd("test");
         $gerentes = $this->gerenteRepository->all();
 
         return view('gerentes.index')
@@ -159,4 +161,43 @@ class GerenteController extends AppBaseController
 
         return redirect(route('gerentes.index'));
     }
+
+    public function indexGerente()
+    {
+        //dd("test");
+        //dd(Auth::user()->id_proyecto);
+        //$est = Auth::user()->id_proyecto;
+        //$proyecto = DB::table('OperacionesDet')->where('id_proyecto', '=', $est)->orderBy('fecha', 'desc')->paginate(60);
+        //dd($proyecto);
+        return view('home_gerente');
+    }
+
+    public function createGerente()
+    {
+        //dd(Auth::user()->id_proyecto);
+        //$est = Auth::user()->id_proyecto;
+        //dd($proyecto);
+        return view('operacion_dets.gerentesoperacioncreate');
+    }
+
+    public function storeGerente()
+    {
+        $input = \request()->all();
+        //dd($input);
+
+        $flight = new OperacionDet();
+
+        $flight->fecha = $input['fecha'];
+        $flight->no_operaciones = $input['no_operaciones'];
+        $flight->id_proyecto = $input['id_proyecto'];
+        $flight->tickets = $input['tickets'];
+        $flight->estatus = $input['estatus'];
+        $flight->save();
+
+        Flash::success('Operacion cargada exitosamente.');
+
+        return redirect(route('h_gerente'));
+
+    }
+
 }

@@ -2,6 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 use Eloquent as Model;
 
 /**
@@ -17,15 +22,15 @@ use Eloquent as Model;
  * @property integer $id_distrital
  * @property string $estatus
  */
-class Gerente extends Model
+class Gerente extends Authenticatable
 {
 
+    use Notifiable;
+
     public $table = 'gerentes';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
-
-
 
 
     public $fillable = [
