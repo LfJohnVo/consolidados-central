@@ -13,6 +13,7 @@ use Flash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Response;
+use Carbon\Carbon;
 
 class DepositoController extends AppBaseController
 {
@@ -37,7 +38,7 @@ class DepositoController extends AppBaseController
         $email = Auth::user()->email;
         //$proyecto = DB::table('OperacionesDet')->where('id_proyecto', '=', $est)->orderBy('fecha', 'desc')->paginate(60);
         //dd($proyecto);
-        $totales = "SELECT ge.id, ge.nombre, pr.nombre, pr.no_proyecto, dep.fecha_deposito, dep.tipo_traslado, dep.ingreso_dep_central, dep.ingreso_dep_cliente, dep.fecha_venta, dep.folios_traslado
+        $totales = "SELECT ge.id, ge.nombre, pr.nombre, pr.no_proyecto, dep.id as idDep, dep.fecha_deposito, dep.tipo_traslado, dep.ingreso_dep_central, dep.ingreso_dep_cliente, dep.fecha_venta, dep.folios_traslado, dep.archivo_pago
                     FROM  depositos_diarios.proyecto pr
                     inner join depositos_diarios.gerentes ge
                     inner join depositos_diarios.depositos dep
@@ -75,9 +76,22 @@ class DepositoController extends AppBaseController
      *
      * @return Response
      */
-    public function store(CreateDepositoRequest $request)
+    public function store(Request $request)
     {
-        $input = $request->all();
+        //$input = $request->all();
+
+        $input = request()->all();
+
+        $img = '';
+        $foto = request()->file('archivo_pago');
+        if ($foto != null) {
+            $dataImg = $foto->get();
+            $nombre_archivo = $foto->getBasename();
+            $im = file_get_contents($foto);
+            $imdata = base64_encode($im);
+            $input['archivo_pago'] = $imdata;
+            //$deposito = $this->depositoRepository->create($input);
+        }
 
         $deposito = $this->depositoRepository->create($input);
 
@@ -180,10 +194,10 @@ class DepositoController extends AppBaseController
     public function DownloadImg($id)
     {
         $imagen = Deposito::find($id);
-        //dd($imagen);
+
         $bin = base64_decode($imagen->archivo_pago);
-        $path = "foto/" . $id . '-' . $imagen->created_at . ".jpeg";
-        //dd($path);
+
+        $path = "foto/" . $id . '-' . $imagen->created_at->toDateString() . ".jpeg";
         // Obtain the original content (usually binary data)
         // Load GD resource from binary data
         $im = imageCreateFromString($bin);

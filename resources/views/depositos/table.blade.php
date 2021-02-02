@@ -24,6 +24,14 @@
                 <td>{{ $deposito->fecha_venta }}</td>
                 <td>{{ $deposito->folios_traslado }}</td>
                 <td>{{ $deposito->nombre }}</td>
+                <td>
+                    @if($deposito->archivo_pago)
+                        <a href="{!! route('img', [$deposito->idDep]) !!}"
+                           class='btn-floating btn-sm btn-blue-grey'>Descargar</a>
+                    @else
+                        Sin archivo
+                    @endif
+                </td>
                 <!--<td>
                     {!! Form::open(['route' => ['depositos.destroy', $deposito->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
