@@ -9,6 +9,8 @@ use App\Repositories\DepositoRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Response;
 
 class DepositoController extends AppBaseController
@@ -30,10 +32,21 @@ class DepositoController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $depositos = $this->depositoRepository->all();
+        //$depositos = $this->depositoRepository->all();
+        $email = Auth::user()->email;
+        //$proyecto = DB::table('OperacionesDet')->where('id_proyecto', '=', $est)->orderBy('fecha', 'desc')->paginate(60);
+        //dd($proyecto);
+        $totales = "SELECT ge.id, ge.nombre, pr.nombre, pr.no_proyecto, dep.fecha_deposito, dep.tipo_traslado, dep.ingreso_dep_central, dep.ingreso_dep_cliente, dep.fecha_venta, dep.folios_traslado
+                    FROM  depositos_diarios.proyecto pr
+                    inner join depositos_diarios.gerentes ge
+                    inner join depositos_diarios.depositos dep
+                    on pr.id_gerentes = ge.id
+                    where ge.email = '$email'";
+        $result1 = DB::SELECT($totales);
+        //dd(Auth::user()->id, $result1);
 
         return view('depositos.index')
-            ->with('depositos', $depositos);
+            ->with('depositos', $result1);
     }
 
     /**
@@ -134,9 +147,9 @@ class DepositoController extends AppBaseController
      *
      * @param int $id
      *
+     * @return Response
      * @throws \Exception
      *
-     * @return Response
      */
     public function destroy($id)
     {
@@ -155,11 +168,12 @@ class DepositoController extends AppBaseController
         return redirect(route('depositos.index'));
     }
 
-    public function DownloadImg($id){
+    public function DownloadImg($id)
+    {
         $imagen = Deposito::find($id);
         //dd($imagen);
         $bin = base64_decode($imagen->archivo_pago);
-        $path = "foto/" . $id.'-'.$imagen->created_at. ".jpeg";
+        $path = "foto/" . $id . '-' . $imagen->created_at . ".jpeg";
         //dd($path);
         // Obtain the original content (usually binary data)
         // Load GD resource from binary data
@@ -174,7 +188,7 @@ class DepositoController extends AppBaseController
         file_put_contents($path, $bin);
         header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename="'.basename($path).'"');
+        header('Content-Disposition: attachment; filename="' . basename($path) . '"');
         header('Expires: 0');
         header('Cache-Control: must-revalidate');
         header('Pragma: public');

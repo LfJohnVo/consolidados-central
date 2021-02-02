@@ -52,3 +52,7 @@
     <a href="{{ route('distritals.index') }}"><i class="fa fa-edit"></i><span>Distritales</span></a>
 </li>
 
+<li class="{{ Request::is('tipoTraslados*') ? 'active' : '' }}">
+    <a href="{{ route('tipoTraslados.index') }}"><i class="fa fa-edit"></i><span>Tipo Traslados</span></a>
+</li>
+
