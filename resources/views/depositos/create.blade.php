@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.gerentes')
 
 @section('content')
     <section class="content-header">

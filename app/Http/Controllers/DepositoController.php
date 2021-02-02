@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateDepositoRequest;
 use App\Http\Requests\UpdateDepositoRequest;
 use App\Models\Deposito;
+use App\Models\TipoTraslado;
 use App\Repositories\DepositoRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
@@ -56,7 +57,15 @@ class DepositoController extends AppBaseController
      */
     public function create()
     {
-        return view('depositos.create');
+        $email = Auth::user()->email;
+        $id = Auth::user()->id;
+        $totales = "SELECT ge.id, ge.nombre, pr.no_proyecto, pr.nombre, pr.id as id_proyecto FROM u548444544_montos1.proyecto pr
+                    inner join u548444544_montos1.gerentes ge
+                    on pr.id_gerentes = ge.id
+                    where ge.email = '$email'";
+        $result1 = DB::SELECT($totales);
+        $traslado = TipoTraslado::all();
+        return view('depositos.create')->with('datos', $result1)->with('traslados', $traslado)->with('id_gerente', $id);
     }
 
     /**
@@ -72,7 +81,7 @@ class DepositoController extends AppBaseController
 
         $deposito = $this->depositoRepository->create($input);
 
-        Flash::success('Deposito saved successfully.');
+        Flash::success('Deposito añadido exitosamente.');
 
         return redirect(route('depositos.index'));
     }

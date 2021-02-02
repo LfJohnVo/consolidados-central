@@ -14,10 +14,14 @@
     </script>
 @endpush
 
-<!-- Tipo Traslado Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('tipo_traslado', 'Tipo Traslado:') !!}
-    {!! Form::text('tipo_traslado', null, ['class' => 'form-control','maxlength' => 50,'maxlength' => 50]) !!}
+<div class="form-group col-sm-12">
+    <label for="sel1">Tipo traslado:</label>
+    <select class="form-control" id="sel1" name="tipo_traslado">
+        <option value="">Seleccione una opcion</option>
+        @foreach($traslados as $item)
+            <option value="{!! $item->tipo !!}">{!! $item->tipo !!}</option>
+        @endforeach
+    </select>
 </div>
 
 <!-- Ingreso Dep Central Field -->
@@ -55,22 +59,25 @@
 </div>
 
 <!-- Id Proyecto Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('id_proyecto', 'Id Proyecto:') !!}
-    {!! Form::number('id_proyecto', null, ['class' => 'form-control']) !!}
+<div class="form-group col-sm-12">
+    <label for="sel1">Proyectos:</label>
+    <select class="form-control" id="sel1" name="id_proyecto">
+        <option value="">Seleccione una opcion</option>
+        @foreach($datos as $proyecto)
+            <option value="{!! $proyecto->id_proyecto !!}">({!! $proyecto->no_proyecto !!}
+                )/{!! $proyecto->nombre !!}</option>
+        @endforeach
+    </select>
 </div>
 
 <!-- Id Gerente Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('id_gerente', 'Id Gerente:') !!}
-    {!! Form::number('id_gerente', null, ['class' => 'form-control']) !!}
-</div>
+{!! Form::hidden('id_gerente', $id_gerente, ['class' => 'form-control']) !!}
 
 <!-- Id Bancos Field -->
-<div class="form-group col-sm-6">
+<!--<div class="form-group col-sm-6">
     {!! Form::label('id_bancos', 'Id Bancos:') !!}
     {!! Form::number('id_bancos', null, ['class' => 'form-control']) !!}
-</div>
+</div>-->
 
 <!-- Archivo Pago Field -->
 <div class="form-group col-sm-12 col-lg-12">
@@ -80,6 +87,6 @@
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
-    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-    <a href="{{ route('depositos.index') }}" class="btn btn-default">Cancel</a>
+    {!! Form::submit('Enviar', ['class' => 'btn btn-primary']) !!}
+    <a href="{{ route('depositos.index') }}" class="btn btn-default">Cancelar</a>
 </div>
