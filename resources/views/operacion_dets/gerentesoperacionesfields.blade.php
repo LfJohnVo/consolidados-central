@@ -20,8 +20,25 @@
     {!! Form::number('no_operaciones', null, ['class' => 'form-control']) !!}
 </div>
 
+
 <div class="form-group col-sm-12">
-    {!! Form::hidden('id_proyecto', $ests, ['class' => 'form-control']) !!}
+    <label for="sel1">Proyectos:</label>
+    <select class="form-control" id="sel1" name="id_proyecto">
+        <option value="">Seleccione una opcion</option>
+        @foreach($consolidados as $proyecto)
+            <option value="{!! $proyecto->id_proyecto !!}">({!! $proyecto->no_proyecto !!})/{!! $proyecto->nombre !!}</option>
+        @endforeach
+    </select>
+</div>
+
+<div class="form-group col-sm-12">
+    <label for="sel1">Conceptos:</label>
+    <select class="form-control" id="sel1" name="id_concepto">
+        <option value="">Seleccione una opcion</option>
+        @foreach($conceptops as $concepto)
+            <option value="{!! $concepto->id_catalogo !!}">{!! $concepto->descripcion !!}</option>
+        @endforeach
+    </select>
 </div>
 
 <!-- No Operaciones Field -->
@@ -41,5 +58,5 @@
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
     {!! Form::submit('Enviar', ['class' => 'btn btn-primary']) !!}
-    <a href="{{ route('operacionDets.index') }}" class="btn btn-default">Cancelar</a>
+    <a href="{{ url('/gerente') }}" class="btn btn-default">Cancelar</a>
 </div>

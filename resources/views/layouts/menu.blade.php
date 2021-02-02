@@ -52,4 +52,3 @@
     <a href="{{ route('distritals.index') }}"><i class="fa fa-edit"></i><span>Distritales</span></a>
 </li>
 
-

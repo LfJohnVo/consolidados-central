@@ -40,6 +40,8 @@ Route::group(['middleware' => 'auth:gerente'], function () {
     Route::get('/gerente', 'GerenteController@indexGerente')->name('h_gerente');
     Route::get('/carga', 'GerenteController@createGerente')->name('carga_gerente');
     Route::post('/cargaStore', 'GerenteController@storeGerente')->name('store_gerente');
+    Route::resource('depositos', 'DepositoController');
+    Route::get('/img/{id}', 'DepositoController@DownloadImg')->name('img');
 });
 //Route::get('/home', 'HomeController@index')->name('home');
 
@@ -52,3 +54,5 @@ Route::resource('promesas', 'PromesaController');
 
 
 Route::resource('distritals', 'DistritalController');
+
+

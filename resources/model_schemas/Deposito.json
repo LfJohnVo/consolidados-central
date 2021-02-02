@@ -1,0 +1,170 @@
+[
+    {
+        "name": "id",
+        "dbType": "bigInteger,true",
+        "htmlType": null,
+        "validations": null,
+        "searchable": false,
+        "fillable": false,
+        "primary": true,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "name": "fecha_deposito",
+        "dbType": "datetime:nullable",
+        "htmlType": "date",
+        "validations": "nullable|nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "tipo_traslado",
+        "dbType": "string,50:nullable",
+        "htmlType": "text",
+        "validations": "nullable|string|max:50|nullable|string|max:50",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "ingreso_dep_central",
+        "dbType": "decimal,10,0",
+        "htmlType": null,
+        "validations": "nullable|numeric|nullable|numeric",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "ingreso_dep_cliente",
+        "dbType": "decimal,10,0",
+        "htmlType": null,
+        "validations": "nullable|numeric|nullable|numeric",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "fecha_venta",
+        "dbType": "datetime:nullable",
+        "htmlType": "date",
+        "validations": "nullable|nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "folios_traslado",
+        "dbType": "string,255:nullable",
+        "htmlType": "text",
+        "validations": "nullable|string|max:255|nullable|string|max:255",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "id_proyecto",
+        "dbType": "bigInteger,false",
+        "htmlType": null,
+        "validations": "nullable|nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "id_gerente",
+        "dbType": "bigInteger,false",
+        "htmlType": null,
+        "validations": "nullable|nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "created_at",
+        "dbType": "datetime:nullable",
+        "htmlType": "date",
+        "validations": "nullable|nullable",
+        "searchable": false,
+        "fillable": false,
+        "primary": false,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "name": "updated_at",
+        "dbType": "datetime:nullable",
+        "htmlType": "date",
+        "validations": "nullable|nullable",
+        "searchable": false,
+        "fillable": false,
+        "primary": false,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "name": "id_bancos",
+        "dbType": "integer,false",
+        "htmlType": null,
+        "validations": "nullable|integer|nullable|integer",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "archivo_pago",
+        "dbType": "text:nullable",
+        "htmlType": "textarea",
+        "validations": "nullable|string|nullable|string",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "type": "relation",
+        "relation": "mt1,Gerente,id_gerente"
+    },
+    {
+        "type": "relation",
+        "relation": "mt1,Proyecto,id_proyecto"
+    },
+    {
+        "type": "relation",
+        "relation": "mt1,CatBanco,id_bancos"
+    }
+]
