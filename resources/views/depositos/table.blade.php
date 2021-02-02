@@ -8,11 +8,10 @@
             <th>Ingreso Dep Cliente</th>
             <th>Fecha Venta</th>
             <th>Folios Traslado</th>
-            <th>Id Proyecto</th>
-            <th>Id Gerente</th>
-            <th>Id Bancos</th>
+            <th>Proyecto</th>
+            <!--<th>Id Bancos</th>-->
             <th>Archivo Pago</th>
-            <th colspan="3">Acción</th>
+            <!--<th colspan="3">Acción</th>-->
         </tr>
         </thead>
         <tbody>
@@ -24,18 +23,16 @@
                 <td>{{ $deposito->ingreso_dep_cliente }}</td>
                 <td>{{ $deposito->fecha_venta }}</td>
                 <td>{{ $deposito->folios_traslado }}</td>
-                <td>{{ $deposito->id_proyecto }}</td>
-                <td>{{ $deposito->id_gerente }}</td>
-                <td>{{ $deposito->id_bancos }}</td>
+                <td>{{ $deposito->nombre }}</td>
                 <td>
                     @if($deposito->archivo_pago)
-                        <a href="{!! route('img', [$deposito->id]) !!}"
+                        <a href="{!! route('img', [$deposito->idDep]) !!}"
                            class='btn-floating btn-sm btn-blue-grey'>Descargar</a>
                     @else
                         Sin archivo
                     @endif
                 </td>
-                <td>
+                <!--<td>
                     {!! Form::open(['route' => ['depositos.destroy', $deposito->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
                         <a href="{{ route('depositos.show', [$deposito->id]) }}" class='btn btn-default btn-xs'><i
@@ -45,7 +42,7 @@
                         {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
                     </div>
                     {!! Form::close() !!}
-                </td>
+                </td>-->
             </tr>
         @endforeach
         </tbody>

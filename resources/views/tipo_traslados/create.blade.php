@@ -1,9 +1,9 @@
-@extends('layouts.gerentes')
+@extends('layouts.app')
 
 @section('content')
     <section class="content-header">
         <h1>
-            Deposito
+            Tipo Traslado
         </h1>
     </section>
     <div class="content">
@@ -11,9 +11,9 @@
         <div class="box box-primary">
             <div class="box-body">
                 <div class="row">
-                    {!! Form::open(['route' => 'depositos.store', 'enctype' => 'multipart/form-data']) !!}
+                    {!! Form::open(['route' => 'tipoTraslados.store']) !!}
 
-                        @include('depositos.fields')
+                        @include('tipo_traslados.fields')
 
                     {!! Form::close() !!}
                 </div>

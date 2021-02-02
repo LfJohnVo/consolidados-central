@@ -56,3 +56,8 @@ Route::resource('promesas', 'PromesaController');
 Route::resource('distritals', 'DistritalController');
 
 
+
+
+Route::resource('tipoTraslados', 'TipoTrasladoController');
+
+Route::resource('bancos', 'BancoController');
