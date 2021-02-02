@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateGerenteRequest;
 use App\Http\Requests\UpdateGerenteRequest;
+use App\Models\Concepto;
 use App\Models\Distrital;
 use App\Repositories\GerenteRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Flash;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Response;
+use App\Models\OperacionDet;
 
 class GerenteController extends AppBaseController
 {
@@ -139,9 +143,9 @@ class GerenteController extends AppBaseController
      *
      * @param int $id
      *
+     * @return Response
      * @throws \Exception
      *
-     * @return Response
      */
     public function destroy($id)
     {
@@ -159,4 +163,56 @@ class GerenteController extends AppBaseController
 
         return redirect(route('gerentes.index'));
     }
+
+    public function indexGerente()
+    {
+        //dd("test");
+        //dd(Auth::user()->id);
+        //$est = Auth::user()->id_proyecto;
+        $email = Auth::user()->email;
+        //$proyecto = DB::table('OperacionesDet')->where('id_proyecto', '=', $est)->orderBy('fecha', 'desc')->paginate(60);
+        //dd($proyecto);
+        $totales = "SELECT ge.id, ge.nombre, pr.no_proyecto, pr.nombre, pr.id as id_proyecto, op.id as op_id, op.fecha, op.no_operaciones, op.tickets FROM u548444544_montos1.proyecto pr
+                    inner join u548444544_montos1.gerentes ge
+                    inner join u548444544_montos1.OperacionesDet op
+                    on pr.id_gerentes = ge.id
+                    where ge.email = '$email'";
+        $result1 = DB::SELECT($totales);
+        //dd(Auth::user()->email, $result1);
+        return view('home_gerente')->with('consolidados', $result1);
+    }
+
+    public function createGerente()
+    {
+        //dd(Auth::user()->id_proyecto);
+        $email = Auth::user()->email;
+        $totales = "SELECT ge.id, ge.nombre, pr.no_proyecto, pr.nombre, pr.id as id_proyecto FROM u548444544_montos1.proyecto pr
+                    inner join u548444544_montos1.gerentes ge
+                    on pr.id_gerentes = ge.id
+                    where ge.email = '$email'";
+        $result1 = DB::SELECT($totales);
+        $conceptops = Concepto::all();
+        return view('operacion_dets.gerentesoperacioncreate')->with('consolidados', $result1)->with('conceptops', $conceptops);
+    }
+
+    public function storeGerente()
+    {
+        $input = \request()->all();
+
+        $flight = new OperacionDet();
+
+        $flight->fecha = $input['fecha'];
+        $flight->no_operaciones = $input['no_operaciones'];
+        $flight->id_proyecto = $input['id_proyecto'];
+        $flight->tickets = $input['tickets'];
+        $flight->estatus = $input['estatus'];
+        $flight->id_concepto = $input['id_concepto'];
+        $flight->save();
+
+        Flash::success('Operacion cargada exitosamente.');
+
+        return redirect(route('h_gerente'));
+
+    }
+
 }

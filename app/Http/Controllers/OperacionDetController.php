@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateOperacionDetRequest;
 use App\Http\Requests\UpdateOperacionDetRequest;
+use App\Models\Concepto;
+use App\Models\OperacionDet;
 use App\Repositories\OperacionDetRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
@@ -43,8 +45,9 @@ class OperacionDetController extends AppBaseController
      */
     public function create()
     {
+        $conceptops = Concepto::all();
         $proyecto = DB::table('proyecto')->select('id', 'no_proyecto', 'Nombre')->get();
-        return view('operacion_dets.create')->with('proyectos', $proyecto);
+        return view('operacion_dets.create')->with('proyectos', $proyecto)->with('conceptops', $conceptops);
     }
 
     /**
@@ -57,7 +60,6 @@ class OperacionDetController extends AppBaseController
     public function store(CreateOperacionDetRequest $request)
     {
         $input = $request->all();
-        //dd($input);
 
         $operacionDet = $this->operacionDetRepository->create($input);
 
@@ -97,6 +99,8 @@ class OperacionDetController extends AppBaseController
     {
         $operacionDet = $this->operacionDetRepository->find($id);
         $proyecto = DB::table('proyecto')->select('id', 'no_proyecto', 'Nombre')->get();
+        $conceptops = Concepto::all();
+
 
         if (empty($operacionDet)) {
             Flash::error('Operacion Det not found');
@@ -104,7 +108,7 @@ class OperacionDetController extends AppBaseController
             return redirect(route('operacionDets.index'));
         }
 
-        return view('operacion_dets.edit')->with('operacionDet', $operacionDet)->with('proyectos', $proyecto);
+        return view('operacion_dets.edit')->with('operacionDet', $operacionDet)->with('proyectos', $proyecto)->with('conceptops', $conceptops);
     }
 
     /**
