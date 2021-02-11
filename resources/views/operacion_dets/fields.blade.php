@@ -30,7 +30,7 @@
     </select>
 </div>
 
-<div class="form-group col-sm-12">
+<!--<div class="form-group col-sm-12">
     <label for="sel1">Conceptos:</label>
     <select class="form-control" id="sel1" name="id_concepto">
         <option value="">Seleccione una opcion</option>
@@ -38,11 +38,11 @@
             <option value="{!! $concepto->id_catalogo !!}">{!! $concepto->descripcion !!}</option>
         @endforeach
     </select>
-</div>
+</div>-->
 
 <!-- No Operaciones Field -->
 <div class="form-group col-sm-12">
-    {!! Form::label('tickets', 'Boletos:') !!}
+    {!! Form::label('tickets', 'Costo boleto promedio:') !!}
     {!! Form::number('tickets', null, ['class' => 'form-control']) !!}
 </div>
 

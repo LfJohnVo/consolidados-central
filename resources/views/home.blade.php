@@ -45,25 +45,28 @@
                     <table class="table table-hover text-center">
                         <thead class="thead-dark">
                         <tr>
+                            <th scope="col">Mes</th>
                             <th scope="col">Operaciones actuales</th>
                             <th scope="col">Operaciones anteriores</th>
                             <th scope="col">Variación</th>
                             <th scope="col">% Porcentaje</th>
                             <th scope="col">Boleto promedio</th>
-                            <th scope="col">Grupo</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            @foreach($desgloses as $desglose)
+                        <span style="display: none;">{!!$i = 1!!}</span>
+                        @foreach($desgloses as $desglose)
+                            <tr>
+                                <td>{!! $mesesarray[$i] !!}</td>
                                 <td>{!! $desglose->operacionesactuales !!}</td>
                                 <td>{!! $desglose->operacioneshistorico !!}</td>
                                 <td>{!! $desglose->variacion !!}</td>
                                 <td>{{ number_format($desglose->porcentaje, 2) }}</td>
                                 <td>{{ number_format($desglose->tickets, 2) }}</td>
-                                <td>{!! $desglose->grupo !!}</td>
-                            @endforeach
-                        </tr>
+                            </tr>
+                            <span style="display: none;">{!! $i += 1 !!}</span>
+                        @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -77,10 +80,13 @@
 
         {!! Form::open(['route' => 'reporte', 'class' => 'form-inline']) !!}
         <div class="form-group mb-3">
-            <input type="text" disabled readonly class="form-control-plaintext" id="staticEmail2" value="Seleccione fecha reporte">
+            <input type="text" disabled readonly class="form-control-plaintext" id="staticEmail2"
+                   value="Seleccione fecha reporte">
         </div>
         <div class="form-group mx-sm-3 mb-2">
-            {!! Form::text('Fecha', null, ['class' => 'form-control','id'=>'Fecha_pago', 'required']) !!}
+            {!! Form::text('Fecha', null, ['class' => 'form-control','id'=>'Fecha_pago', 'required', 'placeholder' => 'Fecha inicio']) !!}
+            &nbsp;&nbsp;
+            {!! Form::text('Fecha_final', null, ['class' => 'form-control','id'=>'Fecha_final', 'required', 'placeholder' => 'Fecha final']) !!}
         </div>
         {!! Form::submit('Descargar', ['class' => 'form-control btn btn-success']) !!}
         {!! Form::close() !!}
@@ -91,6 +97,14 @@
     @push('scripts')
         <script type="text/javascript">
             $('#Fecha_pago').datetimepicker({
+                format: 'YYYY-MM-DD',
+                useCurrent: true,
+                sideBySide: true
+            })
+        </script>
+
+        <script type="text/javascript">
+            $('#Fecha_final').datetimepicker({
                 format: 'YYYY-MM-DD',
                 useCurrent: true,
                 sideBySide: true
