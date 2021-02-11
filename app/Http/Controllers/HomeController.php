@@ -44,25 +44,35 @@ class HomeController extends Controller
         $result = DB::SELECT($sql);
         //dd($result);
 
-        $desglose = "select  sum(no_operaciones) \"operacionesactuales\",
-        (select sum(no_operaciones) from Operaciones_Det_Historico pdh, cat_grupos gr, proyecto pr
-       where pdh.id_proyecto = pr.id and pr.id_grupo = cg.id_grupos and year (fecha) = '$añoA'  and cg.grupo = cg.grupo) \"operacioneshistorico\",
-        ((sum(no_operaciones) - (select sum(no_operaciones) from Operaciones_Det_Historico pdh, cat_grupos gr, proyecto pr
-       where pdh.id_proyecto = pr.id and pr.id_grupo = cg.id_grupos and year (fecha) = '$añoA'  and cg.grupo = cg.grupo))) /
-       (select sum(no_operaciones) from Operaciones_Det_Historico pdh, cat_grupos gr, proyecto pr
-       where pdh.id_proyecto = pr.id and pr.id_grupo = cg.id_grupos and year (fecha) = '$añoA' and cg.grupo = cg.grupo) *100 \"porcentaje\",
-     sum(no_operaciones) - (select sum(no_operaciones) from Operaciones_Det_Historico pdh, cat_grupos gr, proyecto pr
-       where pdh.id_proyecto = pr.id and pr.id_grupo = cg.id_grupos and year (fecha) = '$añoA' and cg.grupo = cg.grupo) as \"variacion\",
-       AVG(tickets) \"tickets\", pr.nombre \"proyecto\", cg.grupo  \"grupo\"
-        from OperacionesDet opd, proyecto pr, cat_grupos cg
-        where opd.id_proyecto = pr.id and pr.id_grupo = cg.id_grupos and  year (fecha) = '$año' #and cg.grupo = ''";
+        $desglose = "select  sum(opd.no_operaciones) 'operacionesactuales',
+            (select sum(pdh.no_operaciones) from Operaciones_Det_Historico pdh, proyecto pr
+            where pdh.id_proyecto = pr.id and pdh.id_proyecto = opd.id_proyecto and month(fecha) = month(current_date()) and year(fecha) = year(current_date() - interval 1 year)) 'operacioneshistorico',
+            ((sum(opd.no_operaciones) - (select sum(pdh.no_operaciones) from Operaciones_Det_Historico pdh, proyecto pr
+            where pdh.id_proyecto = pr.id and pdh.id_proyecto = opd.id_proyecto and  month(fecha) = month(current_date()) and year(fecha) = year(current_date() - interval 1 year)))) / (select sum(pdh.no_operaciones) from Operaciones_Det_Historico pdh,                                 cat_grupos gr, proyecto pr
+            where pdh.id_proyecto = pr.id and pdh.id_proyecto = opd.id_proyecto and month(fecha) = month(current_date()) and year(fecha) = year(current_date() - interval 1 year)) *100 'porcentaje',
+             sum(opd.no_operaciones) - (select sum(pdh.no_operaciones) from Operaciones_Det_Historico pdh, proyecto pr
+            where pdh.id_proyecto = pr.id  and pdh.id_proyecto = opd.id_proyecto and month(fecha) = month(current_date()) and year(fecha) = year(current_date - interval 1 year)) as 'variacion',
+            AVG(opd.tickets) 'tickets', pr.nombre 'proyecto' from OperacionesDet opd, proyecto pr, cat_grupos cg
+            where opd.id_proyecto = pr.id and pr.id_grupo = cg.id_grupos and  month(fecha) = month(current_date()) and year(fecha) = year(current_date()) group by proyecto, fecha
+            having operacioneshistorico > 1";
         //dd($desglose);
         $result1 = DB::SELECT($desglose);
-        //dd($result1);
+        $mesesarray = array(
+            '1' => 'Enero',
+            '2' => 'Febrero',
+            '3' => 'Marzo',
+            '4' => 'Abril',
+            '5' => 'Mayo',
+            '6' => 'Junio',
+            '7' => 'Julio',
+            '8' => 'Agosto',
+            '9' => 'Septiembre',
+            '10' => 'Octubre',
+            '11' => 'Noviembre',
+            '12' => 'Diciembre',
+        );
 
-        //$desglose = DB::table('')
-
-        return view('home')->with('sqls', $result)->with('desgloses', $result1);
+        return view('home')->with('sqls', $result)->with('desgloses', $result1)->with('mesesarray', $mesesarray);
     }
 
     public function enviarEmail()
@@ -115,19 +125,31 @@ class HomeController extends Controller
     {
         //dd("reporte");
         $input = \request()->all();
-        //dd($input);
         $date = $input['Fecha'];
+        $final = $input['Fecha_final'];
         //$date = date('Y-m-d');
         $año = date('Y');
         $añoA = date('Y', strtotime('-1 year'));
-        $desglose = "select distinct(pr.no_proyecto) as numero_proyecto,
-        pr.Nombre as nombre_proyecto, odt.fecha, odt.no_operaciones, cco.descripcion
-        from OperacionesDet odt, proyecto pr, gerentes grt, cat_conceptos cco
-        where odt.id_proyecto = pr.id and odt.id_concepto = cco.id_catalogo and pr.id = grt.id_proyecto
-        and date_format(odt.fecha, '%Y-%m-%d') = '2020-06-29'";
+        $desglose = "SELECT DISTINCT
+    (pr.no_proyecto) AS numero_proyecto,
+    pr.Nombre AS nombre_proyecto,
+    date_format(odt.fecha, '%d-%m-%Y') as fecha,
+    SUM(odt.no_operaciones) AS operaciones_dia,
+    cco.descripcion
+FROM
+    OperacionesDet odt,
+    proyecto pr,
+    gerentes grt,
+    cat_conceptos cco
+WHERE
+    odt.id_proyecto = pr.id
+        AND odt.id_concepto = cco.id_catalogo
+        AND pr.id_gerentes = grt.id
+        AND DATE_FORMAT(odt.fecha, '%Y-%m-%d') BETWEEN '$date' AND '$final'
+GROUP BY pr.no_proyecto";
         //dd($desglose);
         $result1 = DB::SELECT($desglose);
-        //dd($result1, $date);
+        //dd($result1);
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', 'No.Proyecto');
@@ -138,22 +160,22 @@ class HomeController extends Controller
 
         $aDatos = array();
 
-        $contador=2;
-        foreach ($result1 as $item){
-            $sheet->setCellValue('A'.$contador, $item->numero_proyecto);
-            $sheet->setCellValue('B'.$contador, $item->nombre_proyecto);
-            $sheet->setCellValue('C'.$contador, $item->fecha);
-            $sheet->setCellValue('D'.$contador, $item->no_operaciones);
-            $sheet->setCellValue('E'.$contador, $item->descripcion);
-            $contador= $contador + 1;
+        $contador = 2;
+        foreach ($result1 as $item) {
+            $sheet->setCellValue('A' . $contador, $item->numero_proyecto);
+            $sheet->setCellValue('B' . $contador, $item->nombre_proyecto);
+            $sheet->setCellValue('C' . $contador, $item->fecha);
+            $sheet->setCellValue('D' . $contador, $item->operaciones_dia);
+            $sheet->setCellValue('E' . $contador, $item->descripcion);
+            $contador = $contador + 1;
         }
 
         //dd($aDatos, $result1);
 
         $writer = new Xlsx($spreadsheet);
-        $nombre = "reporte-".$date;
-        $writer->save($nombre.'.xlsx');
-        return response()->download(public_path($nombre.'.xlsx'))->deleteFileAfterSend(true);
+        $nombre = "reporte-" . $date;
+        $writer->save($nombre . '.xlsx');
+        return response()->download(public_path($nombre . '.xlsx'))->deleteFileAfterSend(true);
 
 
         //dd("termino");
