@@ -32,10 +32,11 @@ class OperacionDetController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $operacionDets = $this->operacionDetRepository->all();
+        //$operacionDets = $this->operacionDetRepository->orderBy('created_at', 'desc')->all();
+        $operacionDet = OperacionDet::orderBy('created_at', 'desc')->get();
 
         return view('operacion_dets.index')
-            ->with('operacionDets', $operacionDets);
+            ->with('operacionDets', $operacionDet);
     }
 
     /**

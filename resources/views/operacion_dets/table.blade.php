@@ -16,7 +16,14 @@
             <tr>
                 <td>{{ $operacionDet->fecha }}</td>
                 <td>{{ $operacionDet->no_operaciones }}</td>
-                <td>{{ $operacionDet->id_proyecto }}</td>
+                @php
+                    $proyecto = DB::table('proyecto')->select('Nombre')->where('id', $operacionDet->id_proyecto)->first();
+                @endphp
+                <td>
+                    @foreach ($proyecto as $pro)
+                    {{ $pro }}
+                    @endforeach
+                </td>
                 <!--td>{{ $operacionDet->estatus }}</td>-->
                 <!--<td>{{ $operacionDet->id_concepto }}</td>-->
                 <td>{{ $operacionDet->tickets }}</td>
