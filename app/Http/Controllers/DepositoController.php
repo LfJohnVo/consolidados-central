@@ -38,7 +38,7 @@ class DepositoController extends AppBaseController
         $email = Auth::user()->email;
         //$proyecto = DB::table('OperacionesDet')->where('id_proyecto', '=', $est)->orderBy('fecha', 'desc')->paginate(60);
         //dd($proyecto);
-        $totales = "SELECT ge.id, ge.nombre, pr.nombre, pr.no_proyecto, dep.id as idDep, dep.fecha_deposito, dep.tipo_traslado, dep.ingreso_dep_central, dep.ingreso_dep_cliente, dep.fecha_venta, dep.folios_traslado, dep.archivo_pago
+        $totales = "SELECT ge.id, ge.nombre, pr.nombre, pr.no_proyecto, dep.id as idDep, dep.comentario, dep.id_bancos, dep.fecha_deposito, dep.tipo_traslado, dep.ingreso_dep_central, dep.ingreso_dep_cliente, dep.fecha_venta, dep.folios_traslado, dep.archivo_pago
                     FROM  depositos_diarios.proyecto pr
                     inner join depositos_diarios.gerentes ge
                     inner join depositos_diarios.depositos dep
@@ -66,7 +66,8 @@ class DepositoController extends AppBaseController
                     where ge.email = '$email'";
         $result1 = DB::SELECT($totales);
         $traslado = TipoTraslado::all();
-        return view('depositos.create')->with('datos', $result1)->with('traslados', $traslado)->with('id_gerente', $id);
+        $bancos = DB::connection('mysql2')->table('cat_bancos')->pluck('nombre', 'id');
+        return view('depositos.create', compact('bancos'))->with('datos', $result1)->with('traslados', $traslado)->with('id_gerente', $id);
     }
 
     /**

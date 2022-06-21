@@ -1,7 +1,7 @@
 <!-- Fecha Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('fecha', 'Fecha:') !!}
-    {!! Form::text('fecha', null, ['class' => 'form-control','id'=>'fecha']) !!}
+    {!! Form::text('fecha', null, ['class' => 'form-control','id'=>'fecha', 'required']) !!}
 </div>
 
 @push('scripts')
@@ -17,13 +17,13 @@
 <!-- No Operaciones Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('no_operaciones', 'No Operaciones:') !!}
-    {!! Form::number('no_operaciones', null, ['class' => 'form-control']) !!}
+    {!! Form::number('no_operaciones', null, ['class' => 'form-control', 'required']) !!}
 </div>
 
 
 <div class="form-group col-sm-12">
     <label for="sel1">Proyectos:</label>
-    <select class="form-control" id="sel1" name="id_proyecto">
+    <select class="form-control" id="sel1" name="id_proyecto" required>
         <option value="">Seleccione una opcion</option>
         @foreach($consolidados as $proyecto)
             <option value="{!! $proyecto->id_proyecto !!}">({!! $proyecto->no_proyecto !!})/{!! $proyecto->nombre !!}</option>
@@ -42,10 +42,7 @@
 </div>-->
 
 <!-- No Operaciones Field -->
-<div class="form-group col-sm-12">
-    {!! Form::label('tickets', 'Costo boleto promedio:') !!}
-    {!! Form::number('tickets', null, ['class' => 'form-control']) !!}
-</div>
+@livewire('calculo-iva')
 
 {!! Form::hidden('estatus', 1, ['class' => 'form-control']) !!}
 

@@ -54,7 +54,7 @@
 
 <!-- Folios Traslado Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('folios_traslado', 'Folios Traslado:') !!}
+    {!! Form::label('folios_traslado', 'Folio:') !!}
     {!! Form::text('folios_traslado', null, ['class' => 'form-control','maxlength' => 255,'maxlength' => 255]) !!}
 </div>
 
@@ -74,10 +74,10 @@
 {!! Form::hidden('id_gerente', $id_gerente, ['class' => 'form-control']) !!}
 
 <!-- Id Bancos Field -->
-<!--<div class="form-group col-sm-6">
-    {!! Form::label('id_bancos', 'Id Bancos:') !!}
-    {!! Form::number('id_bancos', null, ['class' => 'form-control']) !!}
-</div>-->
+<div class="form-group col-sm-12">
+    {!! Form::label('id_bancos', 'Bancos:') !!}
+    {!! Form::select('id_bancos', $bancos ,['class'=>'form-control','placeholder'=>'Seleccione una opción']) !!}
+</div>
 
 <!-- Archivo Pago Field -->
 <div class="form-group col-sm-12">
@@ -88,6 +88,11 @@
         <input type="file" accept="image/jpeg" name="archivo_pago" class="custom-file-input" id="inputGroupFile01">
         <label class="custom-file-label" for="inputGroupFile01">Elija su archivo</label>
     </div>
+</div>
+
+<div class="form-group col-sm-12">
+    {!! Form::label('comentario', 'Comentario:') !!}
+    {!! Form::textarea('comentario', null, ['class' => 'form-control','id'=>'comentario', 'placeholder' => 'Opcional...']) !!}
 </div>
 
 <!-- Submit Field -->

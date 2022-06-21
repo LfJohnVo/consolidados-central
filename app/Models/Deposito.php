@@ -27,7 +27,7 @@ class Deposito extends Model
 {
 
     public $table = 'depositos';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -44,7 +44,8 @@ class Deposito extends Model
         'id_proyecto',
         'id_gerente',
         'id_bancos',
-        'archivo_pago'
+        'archivo_pago',
+        'comentario'
     ];
 
     /**
@@ -63,7 +64,8 @@ class Deposito extends Model
         'id_proyecto' => 'integer',
         'id_gerente' => 'integer',
         'id_bancos' => 'integer',
-        'archivo_pago' => 'string'
+        'archivo_pago' => 'string',
+        'comentario' => 'string'
     ];
 
     /**
@@ -83,7 +85,8 @@ class Deposito extends Model
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'id_bancos' => 'nullable|integer',
-        'archivo_pago' => 'nullable|string'
+        'archivo_pago' => 'nullable|string',
+        'comentario' => 'nullable|string'
     ];
 
     /**

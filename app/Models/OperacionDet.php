@@ -33,7 +33,9 @@ class OperacionDet extends Model
         'id_proyecto',
         'estatus',
         'tickets',
-        'id_concepto'
+        'id_concepto',
+        'iva',
+        'total'
     ];
 
     /**
@@ -47,6 +49,7 @@ class OperacionDet extends Model
         'no_operaciones' => 'integer',
         'id_proyecto' => 'integer',
         'estatus' => 'string',
+        'iva' => 'double',
     ];
 
     /**

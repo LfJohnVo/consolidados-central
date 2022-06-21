@@ -21,7 +21,9 @@ class OperacionDetRepository extends BaseRepository
         'no_operaciones',
         'id_proyecto',
         'estatus',
-        'id_concepto'
+        'id_concepto',
+        'iva',
+        'total'
     ];
 
     /**

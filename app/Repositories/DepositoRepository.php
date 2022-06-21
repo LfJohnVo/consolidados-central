@@ -26,7 +26,8 @@ class DepositoRepository extends BaseRepository
         'id_proyecto',
         'id_gerente',
         'id_bancos',
-        'archivo_pago'
+        'archivo_pago',
+        'comentario'
     ];
 
     /**

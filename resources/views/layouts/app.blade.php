@@ -11,6 +11,8 @@
 
 
     @yield('css')
+    @livewireStyles
+
 </head>
 
 <body class="skin-black sidebar-mini">
@@ -142,7 +144,7 @@
         @endif
     </div>
 </div>
-
+@livewireScripts
 <!-- Font Awesome -->
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -191,5 +193,7 @@
     $('div.alert').not('.alert-important').delay(7000).fadeOut(1000);
 </script>
 @stack('scripts')
+
+
 </body>
 </html>

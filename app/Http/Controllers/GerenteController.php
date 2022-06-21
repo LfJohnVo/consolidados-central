@@ -172,7 +172,7 @@ class GerenteController extends AppBaseController
         $email = Auth::user()->email;
         //$proyecto = DB::table('OperacionesDet')->where('id_proyecto', '=', $est)->orderBy('fecha', 'desc')->paginate(60);
         //dd($proyecto);
-        $totales = "SELECT ge.id, ge.nombre, pr.no_proyecto, pr.nombre, pr.id as id_proyecto, op.id as op_id, op.fecha, op.no_operaciones, op.tickets FROM u548444544_montos1.proyecto pr
+        $totales = "SELECT ge.id, ge.nombre, pr.no_proyecto, pr.nombre, pr.id as id_proyecto, op.id as op_id, op.iva, op.total, op.fecha, op.no_operaciones, op.tickets FROM u548444544_montos1.proyecto pr
                     inner join u548444544_montos1.gerentes ge
                     inner join u548444544_montos1.OperacionesDet op
                     on pr.id_gerentes = ge.id
@@ -198,7 +198,6 @@ class GerenteController extends AppBaseController
     public function storeGerente()
     {
         $input = \request()->all();
-
         $flight = new OperacionDet();
 
         $flight->fecha = $input['fecha'];
@@ -206,9 +205,10 @@ class GerenteController extends AppBaseController
         $flight->id_proyecto = $input['id_proyecto'];
         $flight->tickets = $input['tickets'];
         $flight->estatus = $input['estatus'];
-        $flight->id_concepto = $input['id_concepto'];
-        $flight->save();
+        $flight->iva = $input['iva'];
+        $flight->total = $input['total'];
 
+        $flight->save();
         Flash::success('Operacion cargada exitosamente.');
 
         return redirect(route('h_gerente'));
