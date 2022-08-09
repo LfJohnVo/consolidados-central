@@ -7,6 +7,7 @@ use DB;
 use PHPMailer\PHPMailer\PHPMailer;
 use Flash;
 use App\Exports\UsersExport;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -31,20 +32,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $date = date('Y-m-d 18:00.00');
-        $año = date('Y');
-        $añoA = date('Y', strtotime('-1 year'));
+        if (Auth::user()->gerente_id != 1) {
+            $date = date('Y-m-d 18:00.00');
+            $año = date('Y');
+            $añoA = date('Y', strtotime('-1 year'));
 
-        $sql = "select distinct (pr.no_proyecto) as numero_proyecto, pr.Nombre as nombre_proyecto,
+            $sql = "select distinct (pr.no_proyecto) as numero_proyecto, pr.Nombre as nombre_proyecto,
         grt . email as correo
         from OperacionesDet odt, proyecto pr, gerentes grt
         where odt.id_proyecto = pr.id
         and pr.id_gerentes = grt.id
         and odt.fecha < '$date' and odt.estatus = 0;";
-        $result = DB::SELECT($sql);
-        //dd($result);
+            $result = DB::SELECT($sql);
+            //dd($result);
 
-        $desglose = "select  sum(opd.no_operaciones) 'operacionesactuales',
+            $desglose = "select  sum(opd.no_operaciones) 'operacionesactuales',
             (select sum(pdh.no_operaciones) from Operaciones_Det_Historico pdh, proyecto pr
             where pdh.id_proyecto = pr.id and pdh.id_proyecto = opd.id_proyecto and month(fecha) = month(current_date()) and year(fecha) = year(current_date() - interval 1 year)) 'operacioneshistorico',
             ((sum(opd.no_operaciones) - (select sum(pdh.no_operaciones) from Operaciones_Det_Historico pdh, proyecto pr
@@ -55,22 +57,25 @@ class HomeController extends Controller
             AVG(opd.tickets) 'tickets', pr.nombre 'proyecto' from OperacionesDet opd, proyecto pr, cat_grupos cg
             where opd.id_proyecto = pr.id and pr.id_grupo = cg.id_grupos and  month(fecha) = month(current_date()) and year(fecha) = year(current_date()) group by proyecto, fecha
             having operacioneshistorico > 1";
-        //dd($desglose);
-        $result1 = DB::SELECT($desglose);
-        $mesesarray = array(
-            '1' => 'Enero',
-            '2' => 'Febrero',
-            '3' => 'Marzo',
-            '4' => 'Abril',
-            '5' => 'Mayo',
-            '6' => 'Junio',
-            '7' => 'Julio',
-            '8' => 'Agosto',
-            '9' => 'Septiembre',
-            '10' => 'Octubre',
-            '11' => 'Noviembre',
-            '12' => 'Diciembre',
-        );
+            //dd($desglose);
+            $result1 = DB::SELECT($desglose);
+            $mesesarray = array(
+                '1' => 'Enero',
+                '2' => 'Febrero',
+                '3' => 'Marzo',
+                '4' => 'Abril',
+                '5' => 'Mayo',
+                '6' => 'Junio',
+                '7' => 'Julio',
+                '8' => 'Agosto',
+                '9' => 'Septiembre',
+                '10' => 'Octubre',
+                '11' => 'Noviembre',
+                '12' => 'Diciembre',
+            );
+        }else{
+            return redirect(route('h_gerente'));
+        }
 
         return view('home')->with('sqls', $result)->with('desgloses', $result1)->with('mesesarray', $mesesarray);
     }
@@ -116,9 +121,7 @@ class HomeController extends Controller
             Flash::success('Correos enviados satisfactoriamente.<button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>');
             return redirect(route('home'));
-
         }
-
     }
 
     public function export()
@@ -181,5 +184,4 @@ GROUP BY pr.no_proyecto";
         //dd("termino");
         //return Excel::download($result1, 'reporte-' . $date . '.xlsx');
     }
-
 }

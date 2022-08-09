@@ -25,14 +25,19 @@
                     <td>{{ $deposito->ingreso_dep_cliente }}</td>
                     <td>{{ $deposito->fecha_venta }}</td>
                     <td>{{ $deposito->folios_traslado }}</td>
-                    <td>{{ $deposito->nombre }}</td>
+                    <td>
+                        @php
+                            $proyecto = \App\Models\Proyecto::select('Nombre')->find($deposito->id_proyecto);
+                        @endphp
+                        {{ $proyecto->Nombre }}
+                    </td>
                     <td>
                         @if ($deposito->archivo_pago)
-                            <a href="{!! route('img', [$deposito->idDep]) !!}" class='btn-floating btn-sm btn-blue-grey'>Descargar</a>
+                            <a href="{!! route('img', [$deposito->id]) !!}" class='btn-floating btn-sm btn-blue-grey'>Descargar</a>
                         @else
                             Sin archivo
                         @endif
-                    </td>(
+                    </td>
                     <td>
                         @if (!empty($deposito->id_bancos))
                             @php

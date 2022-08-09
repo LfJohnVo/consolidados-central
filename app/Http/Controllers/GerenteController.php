@@ -175,8 +175,8 @@ class GerenteController extends AppBaseController
         $email = Auth::user()->email;
         //$proyecto = DB::table('OperacionesDet')->where('id_proyecto', '=', $est)->orderBy('fecha', 'desc')->paginate(60);
         //dd($proyecto);
-        $totales = "SELECT ge.id, ge.nombre, pr.no_proyecto, pr.nombre, pr.id as id_proyecto, op.id as op_id, op.iva, op.total, op.fecha, op.no_operaciones, op.tickets FROM u548444544_montos1.proyecto pr
-                    inner join u548444544_montos1.gerentes ge
+        $totales = "SELECT ge.id, ge.name, pr.no_proyecto, pr.nombre, pr.id as id_proyecto, op.id as op_id, op.iva, op.total, op.fecha, op.no_operaciones, op.tickets FROM u548444544_montos1.proyecto pr
+                    inner join u548444544_montos1.users ge
                     inner join u548444544_montos1.OperacionesDet op
                     on pr.id_gerentes = ge.id
                     where ge.email = '$email'";
@@ -189,8 +189,8 @@ class GerenteController extends AppBaseController
     {
         //dd(Auth::user()->id_proyecto);
         $email = Auth::user()->email;
-        $totales = "SELECT ge.id, ge.nombre, pr.no_proyecto, pr.nombre, pr.id as id_proyecto FROM u548444544_montos1.proyecto pr
-                    inner join u548444544_montos1.gerentes ge
+        $totales = "SELECT ge.id, ge.name, pr.no_proyecto, pr.nombre, pr.id as id_proyecto FROM u548444544_montos1.proyecto pr
+                    inner join u548444544_montos1.users ge
                     on pr.id_gerentes = ge.id
                     where ge.email = '$email'";
         $result1 = DB::SELECT($totales);

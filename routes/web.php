@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'Auth\LoginController@showLoginForm');
 Route::get('/login_gerente', 'Auth\LoginController@showLoginFormG');
-Route::get('/login_g','Auth\LoginController@authenticateG')->name('login_g');
+Route::get('/login_g', 'Auth\LoginController@authenticateG')->name('login_g');
 Auth::routes();
 
 //Auth::routes(['verify' => true]);
@@ -34,15 +34,14 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::resource('operacionHistoricos', 'OperacionHistoricoController');
     Route::resource('grupos', 'GrupoController');
     Route::post('/reporte', 'HomeController@export')->name('reporte');
-
 });
-Route::group(['middleware' => 'auth:gerente'], function () {
-    Route::get('/gerente', 'GerenteController@indexGerente')->name('h_gerente');
-    Route::get('/carga', 'GerenteController@createGerente')->name('carga_gerente');
-    Route::post('/cargaStore', 'GerenteController@storeGerente')->name('store_gerente');
-    Route::resource('depositos', 'DepositoController');
-    Route::get('/img/{id}', 'DepositoController@DownloadImg')->name('img');
-});
+// Route::group(['middleware' => 'auth:gerente'], function () {
+Route::get('/gerente', 'GerenteController@indexGerente')->name('h_gerente');
+Route::get('/carga', 'GerenteController@createGerente')->name('carga_gerente');
+Route::post('/cargaStore', 'GerenteController@storeGerente')->name('store_gerente');
+Route::resource('depositos', 'DepositoController');
+Route::get('/img/{id}', 'DepositoController@DownloadImg')->name('img');
+//});
 //Route::get('/home', 'HomeController@index')->name('home');
 
 

@@ -38,17 +38,17 @@ class DepositoController extends AppBaseController
         $email = Auth::user()->email;
         //$proyecto = DB::table('OperacionesDet')->where('id_proyecto', '=', $est)->orderBy('fecha', 'desc')->paginate(60);
         //dd($proyecto);
-        $totales = "SELECT ge.id, ge.nombre, pr.nombre, pr.no_proyecto, dep.id as idDep, dep.comentario, dep.id_bancos, dep.fecha_deposito, dep.tipo_traslado, dep.ingreso_dep_central, dep.ingreso_dep_cliente, dep.fecha_venta, dep.folios_traslado, dep.archivo_pago
-                    FROM  depositos_diarios.proyecto pr
-                    inner join depositos_diarios.gerentes ge
-                    inner join depositos_diarios.depositos dep
-                    on pr.id_gerentes = ge.id
-                    where ge.email = '$email'";
-        $result1 = DB::SELECT($totales);
-        //dd(Auth::user()->id, $result1);
+        // $totales = "SELECT ge.id, ge.name, pr.nombre, pr.no_proyecto, dep.id as idDep, dep.comentario, dep.id_bancos, dep.fecha_deposito, dep.tipo_traslado, dep.ingreso_dep_central, dep.ingreso_dep_cliente, dep.fecha_venta, dep.folios_traslado, dep.archivo_pago
+        //             FROM  depositos_diarios.proyecto pr
+        //             inner join depositos_diarios.users ge
+        //             inner join depositos_diarios.depositos dep
+        //             on pr.id_gerentes = ge.id
+        //             where ge.email = '$email'";
+        $total = "SELECT id, fecha_deposito, tipo_traslado, ingreso_dep_central, ingreso_dep_cliente, fecha_venta, folios_traslado, id_proyecto, id_gerente, id_bancos, archivo_pago, comentario FROM depositos WHERE id_gerente = " . Auth::user()->id;
+        $result1 = DB::connection('mysql2')->SELECT($total);
 
         return view('depositos.index')
-            ->with('depositos', $result1);
+            ->with('depositos', collect($result1));
     }
 
     /**
@@ -60,12 +60,12 @@ class DepositoController extends AppBaseController
     {
         $email = Auth::user()->email;
         $id = Auth::user()->id;
-        $totales = "SELECT ge.id, ge.nombre, pr.no_proyecto, pr.nombre, pr.id as id_proyecto FROM u548444544_montos1.proyecto pr
-                    inner join u548444544_montos1.gerentes ge
+        $totales = "SELECT ge.id, ge.name, pr.no_proyecto, pr.nombre, pr.id as id_proyecto FROM u548444544_montos1.proyecto pr
+                    inner join u548444544_montos1.users ge
                     on pr.id_gerentes = ge.id
                     where ge.email = '$email'";
         $result1 = DB::SELECT($totales);
-        $traslado = TipoTraslado::all();
+        $traslado = TipoTraslado::get();
         $bancos = DB::connection('mysql2')->table('cat_bancos')->pluck('nombre', 'id');
         return view('depositos.create', compact('bancos'))->with('datos', $result1)->with('traslados', $traslado)->with('id_gerente', $id);
     }
@@ -194,11 +194,15 @@ class DepositoController extends AppBaseController
 
     public function DownloadImg($id)
     {
-        $imagen = Deposito::find($id);
+        $total = "SELECT id, archivo_pago, created_at FROM depositos WHERE id = " . $id;
+        $result1 = DB::connection('mysql2')->SELECT($total);
+        $imagen = collect($result1)->first();
 
         $bin = base64_decode($imagen->archivo_pago);
 
-        $path = "foto/" . $id . '-' . $imagen->created_at->toDateString() . ".jpeg";
+        $date = strtotime($imagen->created_at);
+        $s = date('d-m-Y', $date);
+        $path = "foto/" . $id . '-' . $s . ".jpeg";
         // Obtain the original content (usually binary data)
         // Load GD resource from binary data
         $im = imageCreateFromString($bin);
@@ -221,5 +225,4 @@ class DepositoController extends AppBaseController
         readfile($path);
         unlink($path);
     }
-
 }
