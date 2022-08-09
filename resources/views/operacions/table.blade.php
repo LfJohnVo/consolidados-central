@@ -1,11 +1,11 @@
 <div class="table-responsive">
-    <table class="table table-hover text-center" id="operacions-table">
+    <table class="table table-hover text-center" id="myTable">
         <thead class="thead-dark">
         <tr>
             <th>Proyecto</th>
             <th>No Operaciones</th>
             <th>Dia/Mes/Año</th>
-            <th colspan="3">Acción</th>
+            <th>Acción</th>
         </tr>
         </thead>
         <tbody>

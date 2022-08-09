@@ -47,13 +47,14 @@ class LoginController extends Controller
             'email'   => 'required|email',
             'password' => 'required|min:6'
         ]);
-        //dd($credentials['email']);
+
         if(Auth::guard('gerente')->attempt(['email' => $credentials['email'], 'password' => $credentials['password']])){
-            //dd(Auth::guard('gerente')->user());
+            dd(Auth::guard('gerente')->user());
             return redirect(route('h_gerente'));
         }
+        //dd($credentials['email'], $credentials['password']);
         //auth()->guard('gerente')->attempt($credentials);
-        // Authentication passed...
+        //dd("Authentication passed...");
         return redirect( route('login_g'));
     }
 

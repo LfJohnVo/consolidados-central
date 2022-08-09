@@ -2,28 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateGerenteRequest;
-use App\Http\Requests\UpdateGerenteRequest;
+use Flash;
+use Response;
 use App\Models\Concepto;
 use App\Models\Distrital;
-use App\Repositories\GerenteRepository;
-use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Flash;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Response;
 use App\Models\OperacionDet;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Repositories\GerenteRepository;
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Controllers\AppBaseController;
+use App\Http\Requests\CreateGerenteRequest;
+use App\Http\Requests\UpdateGerenteRequest;
+use App\Models\User;
 
 class GerenteController extends AppBaseController
 {
-    /** @var  GerenteRepository */
-    private $gerenteRepository;
+    /** @var  UserRepository */
+    private $userRepository;
 
-    public function __construct(GerenteRepository $gerenteRepo)
+    public function __construct(UserRepository $userRepo)
     {
-        $this->gerenteRepository = $gerenteRepo;
+        $this->userRepository = $userRepo;
     }
 
     /**
@@ -35,7 +38,7 @@ class GerenteController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $gerentes = $this->gerenteRepository->all();
+        $gerentes = User::where('gerente_id', 1)->get();
 
         return view('gerentes.index')
             ->with('gerentes', $gerentes);
@@ -60,11 +63,11 @@ class GerenteController extends AppBaseController
      *
      * @return Response
      */
-    public function store(CreateGerenteRequest $request)
+    public function store(CreateUserRequest $request)
     {
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
-        $gerente = $this->gerenteRepository->create($input);
+        $gerente = $this->userRepository->create($input);
 
         Flash::success('Gerente añadido.');
 
@@ -100,7 +103,7 @@ class GerenteController extends AppBaseController
      */
     public function edit($id)
     {
-        $gerente = $this->gerenteRepository->find($id);
+        $gerente = $this->userRepository->find($id);
 
         $distrital = Distrital::all();
 
@@ -123,7 +126,7 @@ class GerenteController extends AppBaseController
      */
     public function update($id, UpdateGerenteRequest $request)
     {
-        $gerente = $this->gerenteRepository->find($id);
+        $gerente = $this->userRepository->find($id);
 
         if (empty($gerente)) {
             Flash::error('Gerente not found');
@@ -131,7 +134,7 @@ class GerenteController extends AppBaseController
             return redirect(route('gerentes.index'));
         }
 
-        $gerente = $this->gerenteRepository->update($request->all(), $id);
+        $gerente = $this->userRepository->update($request->all(), $id);
 
         Flash::success('Gerente updated successfully.');
 
@@ -149,7 +152,7 @@ class GerenteController extends AppBaseController
      */
     public function destroy($id)
     {
-        $gerente = $this->gerenteRepository->find($id);
+        $gerente = $this->userRepository->find($id);
 
         if (empty($gerente)) {
             Flash::error('Gerente not found');
@@ -157,7 +160,7 @@ class GerenteController extends AppBaseController
             return redirect(route('gerentes.index'));
         }
 
-        $this->gerenteRepository->delete($id);
+        $this->userRepository->delete($id);
 
         Flash::success('Gerente deleted successfully.');
 
@@ -212,7 +215,5 @@ class GerenteController extends AppBaseController
         Flash::success('Operacion cargada exitosamente.');
 
         return redirect(route('h_gerente'));
-
     }
-
 }

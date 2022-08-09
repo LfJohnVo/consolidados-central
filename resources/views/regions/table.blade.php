@@ -1,11 +1,11 @@
 <div class="table-responsive">
-    <table class="table" id="regions-table">
+    <table class="table" id="myTable">
         <thead>
         <tr>
             <th>Nombre Regional</th>
             <th>Clave Region</th>
             <th>Estatus</th>
-            <th colspan="3">Action</th>
+            <th>Acción</th>
         </tr>
         </thead>
         <tbody>

@@ -1,12 +1,12 @@
 <div class="table-responsive">
-    <table class="table" id="distritals-table">
+    <table class="table" id="myTable">
         <thead>
         <tr>
             <th>Nombre</th>
             <th>Clave Distrito</th>
             <th>Id Regional</th>
             <th>Estatus</th>
-            <th colspan="3">Action</th>
+            <th>Acción</th>
         </tr>
         </thead>
         <tbody>

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'Auth\LoginController@showLoginForm');
 Route::get('/login_gerente', 'Auth\LoginController@showLoginFormG');
-Route::post('/login_g','Auth\LoginController@authenticateG')->name('login_g');
+Route::get('/login_g','Auth\LoginController@authenticateG')->name('login_g');
 Auth::routes();
 
 //Auth::routes(['verify' => true]);

@@ -38,6 +38,10 @@
     {!! Form::text('remember_token', null, ['class' => 'form-control']) !!}
 </div>-->
 
+<div class="form-group col-sm-12">
+    {!! Form::hidden('gerente_id', 0, ['class' => 'form-control','maxlength' => 5,'maxlength' => 5]) !!}
+</div>
+
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
     {!! Form::submit('Enviar', ['class' => 'btn btn-primary']) !!}

@@ -9,6 +9,7 @@ use App\Models\Grupo;
 use App\Models\Proyecto;
 use App\Repositories\ProyectoRepository;
 use App\Http\Controllers\AppBaseController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
@@ -45,7 +46,7 @@ class ProyectoController extends AppBaseController
      */
     public function create()
     {
-        $gerentes = Gerente::all();
+        $gerentes = User::where('gerente_id', '=', 1)->get();
         $grupo = Grupo::all();
         return view('proyectos.create')->with('gerentes', $gerentes)->with("grupos", $grupo);
     }
@@ -63,7 +64,7 @@ class ProyectoController extends AppBaseController
 
         $proyecto = $this->proyectoRepository->create($input);
 
-        Flash::success('Proyecto saved successfully.');
+        Flash::success('Proyecto añadido.');
 
         return redirect(route('proyectos.index'));
     }
@@ -105,7 +106,7 @@ class ProyectoController extends AppBaseController
             return redirect(route('proyectos.index'));
         }
 
-        $gerentes = Gerente::all();
+        $gerentes = User::where('gerente_id', '=', 1)->get();;
         $grupo = Grupo::all();
 
         return view('proyectos.edit')->with('proyecto', $proyecto)->with('gerentes', $gerentes)->with('grupos', $grupo);
@@ -131,7 +132,7 @@ class ProyectoController extends AppBaseController
 
         $proyecto = $this->proyectoRepository->update($request->all(), $id);
 
-        Flash::success('Proyecto updated successfully.');
+        Flash::success('Proyecto actualizado.');
 
         return redirect(route('proyectos.index'));
     }
@@ -157,7 +158,7 @@ class ProyectoController extends AppBaseController
 
         $this->proyectoRepository->delete($id);
 
-        Flash::success('Proyecto deleted successfully.');
+        Flash::success('Proyecto eliminado.');
 
         return redirect(route('proyectos.index'));
     }

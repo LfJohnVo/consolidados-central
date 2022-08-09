@@ -7,15 +7,15 @@
 <!-- Nombre Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('Nombre', 'Nombre:') !!}
-    {!! Form::text('Nombre', null, ['class' => 'form-control','maxlength' => 255,'maxlength' => 255]) !!}
+    {!! Form::text('Nombre', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
 </div>
 
 <!-- Id Gerentes Field -->
 <div class="form-group col-sm-12">
     <label for="exampleFormControlSelect1">Gerente</label>
     <select class="form-control" id="exampleFormControlSelect1" name="id_gerentes">
-        @foreach($gerentes as $gerente)
-            <option value="{{$gerente->id}}">{{$gerente->nombre}}</option>
+        @foreach ($gerentes as $gerente)
+            <option value="{{ $gerente->id }}">{{ $gerente->name }}</option>
         @endforeach
     </select>
 </div>
@@ -24,8 +24,8 @@
 <div class="form-group col-sm-12">
     <label for="exampleFormControlSelect1">Grupo</label>
     <select class="form-control" id="exampleFormControlSelect1" name="id_grupo">
-        @foreach($grupos as $grupo)
-            <option value="{{$grupo->id_grupos}}">{{$grupo->grupo}}</option>
+        @foreach ($grupos as $grupo)
+            <option value="{{ $grupo->id_grupos }}">{{ $grupo->grupo }}</option>
         @endforeach
     </select>
 </div>
@@ -34,8 +34,8 @@
 <div class="form-group col-sm-12">
     <label for="exampleFormControlSelect1">Estatus</label>
     <select class="form-control" id="exampleFormControlSelect1" name="estatus">
-            <option value="1">Activo</option>
-            <option value="2">Inactivo</option>
+        <option value="1">Activo</option>
+        <option value="2">Inactivo</option>
     </select>
 </div>
 

@@ -6,6 +6,7 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Repositories\UserRepository;
 use App\Http\Controllers\AppBaseController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Flash;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +32,7 @@ class UserController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $users = $this->userRepository->all();
+        $users = User::where('gerente_id', '!=' , 1)->get();
 
         return view('users.index')
             ->with('users', $users);

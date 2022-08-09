@@ -15,7 +15,7 @@
     <label for="exampleFormControlSelect1">Gerente</label>
     <select class="form-control" id="exampleFormControlSelect1" name="id_gerentes">
         @foreach($gerentes as $gerente)
-            <option value="{{$gerente->id}}">{{$gerente->nombre}}</option>
+            <option value="{{$gerente->id}}">{{$gerente->name}}</option>
         @endforeach
     </select>
 </div>

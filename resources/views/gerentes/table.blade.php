@@ -1,20 +1,20 @@
 <div class="table-responsive">
-    <table class="table" id="gerentes-table">
+    <table class="table" id="myTable">
         <thead>
         <tr>
             <th>Nombre</th>
             <th>Email</th>
-            <th>Distrital</th>
+            {{-- <th>Distrital</th> --}}
             <th>Estatus</th>
-            <th colspan="3">Action</th>
+            <th>Acción</th>
         </tr>
         </thead>
         <tbody>
         @foreach($gerentes as $gerente)
             <tr>
-                <td>{{ $gerente->nombre }}</td>
+                <td>{{ ucwords(strtolower($gerente->name)) }}</td>
                 <td>{{ $gerente->email }}</td>
-                <td>{{ $gerente->id_distrital }}</td>
+                {{-- <td>{{ $gerente->id_distrital }}</td> --}}
                 <td>
                     @if($gerente->estatus = 1)
                         Activo
