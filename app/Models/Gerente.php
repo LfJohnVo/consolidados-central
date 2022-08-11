@@ -61,7 +61,7 @@ class Gerente extends Authenticatable
      * @var array
      */
     public static $rules = [
-        'nombre' => 'required|string|max:255',
+        'name' => 'required|string|max:255',
         'email' => 'required|string|max:255',
         'password' => 'required|string|max:255',
         'created_at' => 'nullable',

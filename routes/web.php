@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'Auth\LoginController@showLoginForm');
-Route::get('/login_gerente', 'Auth\LoginController@showLoginFormG');
+// Route::get('/login_gerente', 'Auth\LoginController@showLoginFormG');
+//Redirect route to login form
+Route::get('/login_gerente', function () {
+    return Redirect::to('/');
+});
 Route::get('/login_g', 'Auth\LoginController@authenticateG')->name('login_g');
 Auth::routes();
 

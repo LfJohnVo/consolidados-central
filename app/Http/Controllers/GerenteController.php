@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Flash;
 use Response;
+use App\Models\User;
 use App\Models\Concepto;
 use App\Models\Distrital;
 use App\Models\OperacionDet;
@@ -14,10 +15,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Repositories\GerenteRepository;
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateGerenteRequest;
 use App\Http\Requests\UpdateGerenteRequest;
-use App\Models\User;
 
 class GerenteController extends AppBaseController
 {
@@ -124,7 +125,7 @@ class GerenteController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateGerenteRequest $request)
+    public function update($id, UpdateUserRequest $request)
     {
         $gerente = $this->userRepository->find($id);
 
@@ -134,7 +135,10 @@ class GerenteController extends AppBaseController
             return redirect(route('gerentes.index'));
         }
 
-        $gerente = $this->userRepository->update($request->all(), $id);
+        $input = $request->all();
+        $input['password'] = Hash::make($input['password']);
+
+        $gerente = $this->userRepository->update($input, $id);
 
         Flash::success('Gerente updated successfully.');
 

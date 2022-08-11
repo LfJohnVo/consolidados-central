@@ -38,7 +38,8 @@ class User extends Authenticatable
     ];
 
     public static $rules = array(
-        'email' => 'required|email|unique:users',
+        // 'email' => 'required|email|unique:users',
+        'email' => 'required|email',
         'password' => 'required|min:8',
     );
 }
